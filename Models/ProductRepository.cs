@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
 
 namespace Inventory.Models
 {
@@ -74,8 +73,8 @@ namespace Inventory.Models
             {
                 productFound.Name = productDTO.Name;
                 productFound.Image = productDTO.Image;
-                productFound.costPrice = productDTO.costPrice;
-                productFound.sellingPrice = productDTO.sellingPrice;
+                productFound.CostPrice = productDTO.CostPrice;
+                productFound.SellingPrice = productDTO.SellingPrice;
 
                 this._inventoryContext.SaveChanges();
             }
@@ -101,8 +100,8 @@ namespace Inventory.Models
             productDTO.Id = product.Id;
             productDTO.Name = product.Name;
             productDTO.Image = product.Image;
-            productDTO.sellingPrice = product.sellingPrice;
-            productDTO.costPrice = product.costPrice;
+            productDTO.SellingPrice = product.SellingPrice;
+            productDTO.CostPrice = product.CostPrice;
 
             return productDTO;
         }
@@ -113,8 +112,8 @@ namespace Inventory.Models
             product.Id = productDTO.Id;
             product.Name = productDTO.Name;
             product.Image = productDTO.Image;
-            product.sellingPrice = productDTO.sellingPrice;
-            product.costPrice = productDTO.costPrice;
+            product.SellingPrice = productDTO.SellingPrice;
+            product.CostPrice = productDTO.CostPrice;
 
             return product;
         }

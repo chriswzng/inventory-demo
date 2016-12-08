@@ -18,10 +18,10 @@ namespace Inventory.Models
         
         [Required]
         [DataType(DataType.Currency)]
-        public double costPrice { get; set; }
+        public double CostPrice { get; set; }
 
         [Required]
         [DataType(DataType.Currency)]
-        public double sellingPrice { get; set; }
+        public double SellingPrice { get; set; }
     }
 }

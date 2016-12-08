@@ -41,7 +41,7 @@ namespace Inventory.Controllers
                 return NotFound("Product is not found.");
             }
 
-            return new ObjectResult(productDTOResult);
+            return new OkObjectResult(productDTOResult);
         }
 
         // POST api/product
@@ -50,7 +50,7 @@ namespace Inventory.Controllers
         public IActionResult Post([FromBody] ProductDTO product)
         {
             ProductDTO productDTOResult = this.ProductRepo.Add(product);
-            return new ObjectResult(productDTOResult);
+            return new OkObjectResult(productDTOResult);
         }
 
         // PUT api/product
@@ -64,7 +64,7 @@ namespace Inventory.Controllers
                 return NotFound("Product is not found for updating.");
             }
 
-            return new ObjectResult(productDTOResult);
+            return new OkObjectResult(productDTOResult);
         }
     }
 }
