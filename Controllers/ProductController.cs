@@ -17,7 +17,7 @@ namespace Inventory.Controllers
 
         // GET api/product?name={productName}
         [HttpGet]
-        public IEnumerable<ProductResultDTO> Get([FromQuery] String name)
+        public IEnumerable<ProductResult> Get([FromQuery] String name)
         {
             if (String.IsNullOrEmpty(name))
             {
@@ -31,10 +31,10 @@ namespace Inventory.Controllers
 
         // GET api/product/{id}
         [HttpGet("{id:Guid}", Name = "GetProduct")]
-        [ProducesResponseTypeAttribute(typeof(ProductDTO), 200)]
+        [ProducesResponseTypeAttribute(typeof(Product), 200)]
         public IActionResult GetById(Guid id)
         {
-            ProductResultDTO productResultDTO = this.ProductRepo.Get(id);
+            ProductResult productResultDTO = this.ProductRepo.Get(id);
 
             if (productResultDTO == null)
             {
@@ -46,18 +46,18 @@ namespace Inventory.Controllers
 
         // POST api/product
         [HttpPost]
-        [ProducesResponseTypeAttribute(typeof(ProductDTO), 200)]
-        public IActionResult Post([FromBody] ProductDTO product)
+        [ProducesResponseTypeAttribute(typeof(Product), 200)]
+        public IActionResult Post([FromBody] Product product)
         {
-            ProductResultDTO productResultDTO = this.ProductRepo.Add(product);
+            ProductResult productResultDTO = this.ProductRepo.Add(product);
             return new OkObjectResult(productResultDTO);
         }
 
         // PUT api/product/{id}
         [HttpPut("{id:Guid}")]
-        public IActionResult Update(Guid id, [FromBody] ProductDTO product)
+        public IActionResult Update(Guid id, [FromBody] Product product)
         {
-            ProductResultDTO productResultDTO = this.ProductRepo.Update(id, product);
+            ProductResult productResultDTO = this.ProductRepo.Update(id, product);
 
             if (productResultDTO == null)
             {

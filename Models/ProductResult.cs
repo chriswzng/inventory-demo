@@ -2,7 +2,7 @@ using System;
 
 namespace Inventory.Models
 {
-    public class ProductResultDTO : ProductDTO
+    public class ProductResult : Product
     {
         public Guid Id { get; set; }        
     }
