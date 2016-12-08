@@ -28,31 +28,31 @@ namespace Inventory.UnitTests
             Guid waterBottleGuid = Guid.NewGuid();
             Guid laptopGuid = Guid.NewGuid();
 
-            ProductDTO applePie = new ProductDTO()
+            ProductResultDTO applePie = new ProductResultDTO()
             {
                 Id = applePieGuid, Name = "Apple Pie", CostPrice = 2.5, SellingPrice = 3.5
             };
             
-            ProductDTO waterBottle = new ProductDTO()
+            ProductResultDTO waterBottle = new ProductResultDTO()
             {
                 Id = waterBottleGuid, Name = "Water Bottle", CostPrice = 10, SellingPrice = 28
             };
 
-            ProductDTO laptop = new ProductDTO()
+            ProductResultDTO laptop = new ProductResultDTO()
             {
                 Id = laptopGuid, Name = "Dell Ultrabook X13", CostPrice = 3500, SellingPrice = 4500
             };
 
-            this._mockProductRepository.Setup(r => r.GetAll()).Returns(new List<ProductDTO>()
+            this._mockProductRepository.Setup(r => r.GetAll()).Returns(new List<ProductResultDTO>()
             {
                 applePie,waterBottle,laptop
             });
 
             // act
-            var productList = this._productController.Get(null) as List<ProductDTO>;
-            ProductDTO applePieResult = productList.Where(p => p.Id == applePieGuid).FirstOrDefault();
-            ProductDTO waterBottleResult = productList.Where(p => p.Id == waterBottleGuid).FirstOrDefault();
-            ProductDTO laptopResult = productList.Where(p => p.Id == laptopGuid).FirstOrDefault();
+            var productList = this._productController.Get(null) as List<ProductResultDTO>;
+            ProductResultDTO applePieResult = productList.Where(p => p.Id == applePieGuid).FirstOrDefault();
+            ProductResultDTO waterBottleResult = productList.Where(p => p.Id == waterBottleGuid).FirstOrDefault();
+            ProductResultDTO laptopResult = productList.Where(p => p.Id == laptopGuid).FirstOrDefault();
 
             // assert
             Assert.Equal(3, productList.Count);
@@ -69,7 +69,7 @@ namespace Inventory.UnitTests
         {
             // arrange
             Guid existingProductId = Guid.NewGuid();
-            ProductDTO existingProduct = new ProductDTO() 
+            ProductResultDTO existingProduct = new ProductResultDTO() 
             {
                 Id = existingProductId, Name = "Apple Pie", Image = "apple_pie.jpg", CostPrice = 2.50, SellingPrice = 3.50
             };
@@ -78,7 +78,7 @@ namespace Inventory.UnitTests
 
             // act
             var result = this._productController.GetById(existingProductId) as ObjectResult;
-            var productFound = result.Value as ProductDTO;
+            var productFound = result.Value as ProductResultDTO;
 
             // assert
             Assert.NotNull(result);

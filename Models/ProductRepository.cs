@@ -13,61 +13,59 @@ namespace Inventory.Models
             this._inventoryContext = InventoryContext;
         }
 
-        public ProductDTO Get(Guid id)
+        public ProductResultDTO Get(Guid id)
         {
             var product = this._inventoryContext.Products.Where(p => p.Id == id).FirstOrDefault();
-            ProductDTO productDTO = null;
+            ProductResultDTO productResultDTO = null;
 
             if (product != null)
             {
-                productDTO = mapDTO(product);
+                productResultDTO = mapDTO(product);
             }
 
-            return productDTO;
+            return productResultDTO;
         }
 
-        public IEnumerable<ProductDTO> GetAll()
+        public IEnumerable<ProductResultDTO> GetAll()
         {
             List<Product> productList = this._inventoryContext.Products.ToList();
-            List<ProductDTO> productDTOList = new List<ProductDTO>();
+            List<ProductResultDTO> productResultDTOList = new List<ProductResultDTO>();
 
             foreach (var product in productList)
             {
-                productDTOList.Add(mapDTO(product));
+                productResultDTOList.Add(mapDTO(product));
             }
 
-            return productDTOList;
+            return productResultDTOList;
         }
 
-        public IEnumerable<ProductDTO> GetByName(String searchString)
+        public IEnumerable<ProductResultDTO> GetByName(String searchString)
         {
             List<Product> productList = this._inventoryContext.Products.Where(p => p.Name.Contains(searchString)).ToList();
-
-
-            List<ProductDTO> productDTOList = new List<ProductDTO>();
+            List<ProductResultDTO> productResultDTOList = new List<ProductResultDTO>();
 
             foreach (var product in productList)
             {
-                productDTOList.Add(mapDTO(product));
+                productResultDTOList.Add(mapDTO(product));
             }
 
-            return productDTOList;
+            return productResultDTOList;
         }
 
-        public ProductDTO Add(ProductDTO productDTO)
+        public ProductResultDTO Add(ProductDTO productDTO)
         {
-            productDTO.Id = Guid.NewGuid();
             Product product = map(productDTO);
+            product.Id = Guid.NewGuid();
 
             this._inventoryContext.Add(product);
             this._inventoryContext.SaveChanges();
 
-            return productDTO;
+            return mapDTO(product);
         }
 
-        public ProductDTO Update(ProductDTO productDTO)
+        public ProductResultDTO Update(Guid id, ProductDTO productDTO)
         {
-            Product productFound = this._inventoryContext.Products.Where(p => p.Id == productDTO.Id).FirstOrDefault();
+            Product productFound = this._inventoryContext.Products.Where(p => p.Id == id).FirstOrDefault();
 
             if (productFound != null)
             {
@@ -77,39 +75,33 @@ namespace Inventory.Models
                 productFound.SellingPrice = productDTO.SellingPrice;
 
                 this._inventoryContext.SaveChanges();
-            }
-            else
-            {
-                productDTO = null;
+                return mapDTO(productFound);
             }
 
-            return productDTO;
+            return null;
         }
 
-        public ProductDTO Remove(Guid id)
+        public ProductResultDTO Remove(Guid id)
         {
             throw new NotImplementedException();
         }
 
-
-
         // This can be replaced by AutoMapper
-        private ProductDTO mapDTO(Product product)
+        private ProductResultDTO mapDTO(Product product)
         {
-            ProductDTO productDTO = new ProductDTO();
-            productDTO.Id = product.Id;
-            productDTO.Name = product.Name;
-            productDTO.Image = product.Image;
-            productDTO.SellingPrice = product.SellingPrice;
-            productDTO.CostPrice = product.CostPrice;
+            ProductResultDTO productResultDTO = new ProductResultDTO();
+            productResultDTO.Id = product.Id;
+            productResultDTO.Name = product.Name;
+            productResultDTO.Image = product.Image;
+            productResultDTO.SellingPrice = product.SellingPrice;
+            productResultDTO.CostPrice = product.CostPrice;
 
-            return productDTO;
+            return productResultDTO;
         }
 
         private Product map(ProductDTO productDTO)
         {
             Product product = new Product();
-            product.Id = productDTO.Id;
             product.Name = productDTO.Name;
             product.Image = productDTO.Image;
             product.SellingPrice = productDTO.SellingPrice;

@@ -17,7 +17,7 @@ namespace Inventory.Controllers
 
         // GET api/product?name={productName}
         [HttpGet]
-        public IEnumerable<ProductDTO> Get([FromQuery] String name)
+        public IEnumerable<ProductResultDTO> Get([FromQuery] String name)
         {
             if (String.IsNullOrEmpty(name))
             {
@@ -34,14 +34,14 @@ namespace Inventory.Controllers
         [ProducesResponseTypeAttribute(typeof(ProductDTO), 200)]
         public IActionResult GetById(Guid id)
         {
-            ProductDTO productDTOResult = this.ProductRepo.Get(id);
+            ProductResultDTO productResultDTO = this.ProductRepo.Get(id);
 
-            if (productDTOResult == null)
+            if (productResultDTO == null)
             {
                 return NotFound("Product is not found.");
             }
 
-            return new OkObjectResult(productDTOResult);
+            return new OkObjectResult(productResultDTO);
         }
 
         // POST api/product
@@ -49,22 +49,22 @@ namespace Inventory.Controllers
         [ProducesResponseTypeAttribute(typeof(ProductDTO), 200)]
         public IActionResult Post([FromBody] ProductDTO product)
         {
-            ProductDTO productDTOResult = this.ProductRepo.Add(product);
-            return new OkObjectResult(productDTOResult);
+            ProductResultDTO productResultDTO = this.ProductRepo.Add(product);
+            return new OkObjectResult(productResultDTO);
         }
 
-        // PUT api/product
-        [HttpPut]
-        public IActionResult Update([FromBody] ProductDTO product)
+        // PUT api/product/{id}
+        [HttpPut("{id:Guid}")]
+        public IActionResult Update(Guid id, [FromBody] ProductDTO product)
         {
-            ProductDTO productDTOResult = this.ProductRepo.Update(product);
+            ProductResultDTO productResultDTO = this.ProductRepo.Update(id, product);
 
-            if (productDTOResult == null)
+            if (productResultDTO == null)
             {
                 return NotFound("Product is not found for updating.");
             }
 
-            return new OkObjectResult(productDTOResult);
+            return new OkObjectResult(productResultDTO);
         }
     }
 }
