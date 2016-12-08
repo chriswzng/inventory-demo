@@ -13,10 +13,10 @@ namespace Inventory.Models
             this._inventoryContext = InventoryContext;
         }
 
-        public ProductResult Get(Guid id)
+        public ProductResultDto Get(Guid id)
         {
             var product = this._inventoryContext.Products.Where(p => p.Id == id).FirstOrDefault();
-            ProductResult productResultDTO = null;
+            ProductResultDto productResultDTO = null;
 
             if (product != null)
             {
@@ -26,10 +26,10 @@ namespace Inventory.Models
             return productResultDTO;
         }
 
-        public IEnumerable<ProductResult> GetAll()
+        public IEnumerable<ProductResultDto> GetAll()
         {
-            List<ProductEnt> productList = this._inventoryContext.Products.ToList();
-            List<ProductResult> productResultDTOList = new List<ProductResult>();
+            List<Product> productList = this._inventoryContext.Products.ToList();
+            List<ProductResultDto> productResultDTOList = new List<ProductResultDto>();
 
             foreach (var product in productList)
             {
@@ -39,10 +39,10 @@ namespace Inventory.Models
             return productResultDTOList;
         }
 
-        public IEnumerable<ProductResult> GetByName(String searchString)
+        public IEnumerable<ProductResultDto> GetByName(String searchString)
         {
-            List<ProductEnt> productList = this._inventoryContext.Products.Where(p => p.Name.Contains(searchString)).ToList();
-            List<ProductResult> productResultDTOList = new List<ProductResult>();
+            List<Product> productList = this._inventoryContext.Products.Where(p => p.Name.Contains(searchString)).ToList();
+            List<ProductResultDto> productResultDTOList = new List<ProductResultDto>();
 
             foreach (var product in productList)
             {
@@ -52,9 +52,9 @@ namespace Inventory.Models
             return productResultDTOList;
         }
 
-        public ProductResult Add(Product productDTO)
+        public ProductResultDto Add(ProductDto productDTO)
         {
-            ProductEnt product = map(productDTO);
+            Product product = map(productDTO);
             product.Id = Guid.NewGuid();
 
             this._inventoryContext.Add(product);
@@ -63,9 +63,9 @@ namespace Inventory.Models
             return mapDTO(product);
         }
 
-        public ProductResult Update(Guid id, Product productDTO)
+        public ProductResultDto Update(Guid id, ProductDto productDTO)
         {
-            ProductEnt productFound = this._inventoryContext.Products.Where(p => p.Id == id).FirstOrDefault();
+            Product productFound = this._inventoryContext.Products.Where(p => p.Id == id).FirstOrDefault();
 
             if (productFound != null)
             {
@@ -81,15 +81,15 @@ namespace Inventory.Models
             return null;
         }
 
-        public ProductResult Remove(Guid id)
+        public ProductResultDto Remove(Guid id)
         {
             throw new NotImplementedException();
         }
 
         // This can be replaced by AutoMapper
-        private ProductResult mapDTO(ProductEnt product)
+        private ProductResultDto mapDTO(Product product)
         {
-            ProductResult productResultDTO = new ProductResult();
+            ProductResultDto productResultDTO = new ProductResultDto();
             productResultDTO.Id = product.Id;
             productResultDTO.Name = product.Name;
             productResultDTO.Image = product.Image;
@@ -99,9 +99,9 @@ namespace Inventory.Models
             return productResultDTO;
         }
 
-        private ProductEnt map(Product productDTO)
+        private Product map(ProductDto productDTO)
         {
-            ProductEnt product = new ProductEnt();
+            Product product = new Product();
             product.Name = productDTO.Name;
             product.Image = productDTO.Image;
             product.SellingPrice = productDTO.SellingPrice;

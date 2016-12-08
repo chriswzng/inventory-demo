@@ -7,6 +7,6 @@ namespace Inventory.Models
         public InventoryContext(DbContextOptions<InventoryContext> options) : base(options)
         {}
 
-        public DbSet<ProductEnt> Products { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }

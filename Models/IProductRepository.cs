@@ -5,11 +5,11 @@ namespace Inventory.Models
 {
     public interface IProductRepository
     {
-        IEnumerable<ProductResult> GetAll();
-        IEnumerable<ProductResult> GetByName(String searchString);
-        ProductResult Get(Guid id);
-        ProductResult Add(Product product);
-        ProductResult Update(Guid id, Product product);
-        ProductResult Remove(Guid id);
+        IEnumerable<ProductResultDto> GetAll();
+        IEnumerable<ProductResultDto> GetByName(String searchString);
+        ProductResultDto Get(Guid id);
+        ProductResultDto Add(ProductDto product);
+        ProductResultDto Update(Guid id, ProductDto product);
+        ProductResultDto Remove(Guid id);
     }
 }
