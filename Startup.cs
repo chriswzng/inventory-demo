@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Inventory.Models;
-using AutoMapper;
 
 namespace Inventory
 {
@@ -33,8 +28,20 @@ namespace Inventory
             // Add framework services.
             services.AddMvc();
 
-             // Inject an implementation of ISwaggerProvider with defaulted settings applied
+            // Inject an implementation of ISwaggerProvider with defaulted settings applied
             services.AddSwaggerGen();
+            services.ConfigureSwaggerGen(options =>
+            {
+                options.SingleApiVersion(new Swashbuckle.Swagger.Model.Info
+                {
+                    Version = "v1",
+                    Title = "Inventory API",
+                    Description = "The API to access the features in the inventory application"
+                });
+                options.IncludeXmlComments(string.Format(@"{0}\inventory-demo.xml", System.AppContext.BaseDirectory));
+                options.DescribeAllEnumsAsStrings();
+            });
+
             services.AddSingleton<IProductRepository, ProductRepository>();
 
             var connectionString = Configuration["DbContextSettings:ConnectionString"];
@@ -49,7 +56,7 @@ namespace Inventory
 
             app.UseMvc();
 
-             // Enable middleware to serve generated Swagger as a JSON endpoint
+            // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)

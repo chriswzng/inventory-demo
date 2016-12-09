@@ -9,13 +9,13 @@ namespace Inventory.Models
     {
         [Key]
         public Guid Id { get; set; }
-        
+
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
-        
+
         public string Image { get; set; }
-        
+
         [Required]
         [DataType(DataType.Currency)]
         public double CostPrice { get; set; }
