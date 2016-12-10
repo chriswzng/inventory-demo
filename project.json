@@ -47,7 +47,8 @@
     "emitEntryPoint": true,
     "preserveCompilationContext": true,
     "debugType": "portable",
-    "xmlDoc": true
+    "xmlDoc": true,
+    "outputName": "inventory-demo"
   },
   "runtimeOptions": {
     "configProperties": {

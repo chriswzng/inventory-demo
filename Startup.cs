@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Inventory.Models;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace Inventory
 {
@@ -38,7 +39,8 @@ namespace Inventory
                     Title = "Inventory API",
                     Description = "The API to access the features in the inventory application"
                 });
-                options.IncludeXmlComments(string.Format(@"{0}\inventory-demo.xml", System.AppContext.BaseDirectory));
+                var xmlPath = GetXmlCommentsPath();
+                options.IncludeXmlComments(xmlPath);
                 options.DescribeAllEnumsAsStrings();
             });
 
@@ -61,6 +63,12 @@ namespace Inventory
 
             // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
             app.UseSwaggerUi();
+        }
+
+        private string GetXmlCommentsPath()
+        {
+            var app = PlatformServices.Default.Application;
+            return System.IO.Path.Combine(app.ApplicationBasePath, System.IO.Path.ChangeExtension(app.ApplicationName, "xml"));
         }
     }
 }
